@@ -27,7 +27,7 @@ contains = [['-','-','-'],
 # --------------------------
 
 pygame.init()
-SCREEN = pygame.display.set_mode((CELL_SIZE*CELL_NUMBER, CELL_SIZE*CELL_NUMBER))
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 # colors
