@@ -11,6 +11,9 @@ CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
 CIRCLE_TURN = True
 
 moves = []
+contains = [[0,0,0],
+            [0,0,0],
+            [0,0,0]]
 
 pygame.init()
 SCREEN = pygame.display.set_mode((CELL_SIZE*CELL_NUMBER, CELL_SIZE*CELL_NUMBER))
@@ -44,8 +47,6 @@ def drawGrid(boxSize):
 circle, circleRect = loadImage(CIRCLE_IMG_PATH)
 cross, crossRect = loadImage(CROSS_IMG_PATH)
 
-showImage = False
-
 # main game loop
 while True:
     # event handler
@@ -60,16 +61,17 @@ while True:
                 col = (x // CELL_SIZE)
                 row = (y // CELL_SIZE)
 
-                image = circle if CIRCLE_TURN else cross
-                imageRect = image.get_rect(center=(
-                    col * CELL_SIZE,
-                    row * CELL_SIZE
-                    ))
-
-                moves.append((image, imageRect))
-                CIRCLE_TURN = not CIRCLE_TURN
-
-                showImage = True
+                if contains[row][col] == 0:
+                    contains[row][col] = 1
+                    image = circle if CIRCLE_TURN else cross
+                    imageRect = image.get_rect(center=(
+                        col * CELL_SIZE,
+                        row * CELL_SIZE
+                        ))
+                    moves.append((image, imageRect))
+                    CIRCLE_TURN = not CIRCLE_TURN
+                else:
+                    continue
 
     # draw grid
     drawGrid(CELL_SIZE)
