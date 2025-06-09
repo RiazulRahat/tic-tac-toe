@@ -10,6 +10,7 @@ CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
 
 CIRCLE_TURN = True
 
+moves = []
 
 pygame.init()
 SCREEN = pygame.display.set_mode((CELL_SIZE*CELL_NUMBER, CELL_SIZE*CELL_NUMBER))
@@ -21,7 +22,7 @@ backgroundColor = pygame.Color('black')
 
 # functions
 def loadImage(imagePath):
-    image = pygame.image.load(imagePath)
+    image = pygame.image.load(imagePath).convert_alpha()
     image = pygame.transform.scale(image, (200,200))
     imageRect = image.get_rect(center=(CELL_SIZE // 2, CELL_SIZE // 2))
     return image, imageRect
@@ -60,12 +61,12 @@ while True:
                 row = (y // CELL_SIZE)
 
                 image = circle if CIRCLE_TURN else cross
-                imageRect = circleRect if CIRCLE_TURN else crossRect
-
-                imageRect.center = (
+                imageRect = image.get_rect(center=(
                     col * CELL_SIZE,
-                    row * CELL_SIZE)
-                
+                    row * CELL_SIZE
+                    ))
+
+                moves.append((image, imageRect))
                 CIRCLE_TURN = not CIRCLE_TURN
 
                 showImage = True
@@ -73,7 +74,7 @@ while True:
     # draw grid
     drawGrid(CELL_SIZE)
 
-    if showImage:
+    for image, imageRect in moves:
         SCREEN.blit(image, imageRect.center)
 
 
