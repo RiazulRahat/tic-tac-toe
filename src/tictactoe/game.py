@@ -1,4 +1,5 @@
 import pygame, sys
+from main import GS_tictactoe as ttt
 
 # CONSTANTS -------------------------------------------------------------
 
@@ -17,13 +18,8 @@ CIRCLE_TURN = True
 
 # ----------------------------------------------------------------------
 
-# May be used by Game Logic
-
-moves = []
-contains = [['-','-','-'],
-            ['-','-','-'],
-            ['-','-','-']]
-
+# Initialize a new board
+board = ttt()
 # --------------------------
 
 pygame.init()
@@ -74,14 +70,14 @@ while True:
 
                 coord = (row,col)
 
-                if contains[row][col] == '-':
-                    contains[row][col] = 'O' if CIRCLE_TURN else 'X'
+                if board.contains[row][col] == '-':
+                    board.contains[row][col] = 'O' if CIRCLE_TURN else 'X'
                     image = circle if CIRCLE_TURN else cross
                     imageRect = image.get_rect(center=(
                         col * CELL_SIZE,
                         row * CELL_SIZE
                         ))
-                    moves.append((image, imageRect, coord))
+                    board.moves.append((image, imageRect, coord))
                     CIRCLE_TURN = not CIRCLE_TURN
                 else:
                     continue
@@ -90,7 +86,7 @@ while True:
     drawGrid(CELL_SIZE)
 
     # Draw moves
-    for image, imageRect, _unusedCoord in moves:
+    for image, imageRect, _unusedCoord in board.moves:
         SCREEN.blit(image, imageRect.center)
 
 
