@@ -8,7 +8,7 @@ CELL_NUMBER = 3
 CIRCLE_IMG_PATH = "src/tictactoe/assets/circle.svg.png"
 CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
 
-CIRCLE_TURN = True #
+CIRCLE_TURN = True
 
 
 pygame.init()
@@ -59,9 +59,14 @@ while True:
                 col = (x // CELL_SIZE)
                 row = (y // CELL_SIZE)
 
-                crossRect.center = (
+                image = circle if CIRCLE_TURN else cross
+                imageRect = circleRect if CIRCLE_TURN else crossRect
+
+                imageRect.center = (
                     col * CELL_SIZE,
                     row * CELL_SIZE)
+                
+                CIRCLE_TURN = not CIRCLE_TURN
 
                 showImage = True
 
@@ -69,7 +74,7 @@ while True:
     drawGrid(CELL_SIZE)
 
     if showImage:
-        SCREEN.blit(cross, crossRect.center)
+        SCREEN.blit(image, imageRect.center)
 
 
 
