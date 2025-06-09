@@ -59,7 +59,7 @@ while True:
                 col = (x // CELL_SIZE)
                 row = (y // CELL_SIZE)
 
-                circleRect.center = (
+                crossRect.center = (
                     col * CELL_SIZE,
                     row * CELL_SIZE)
 
@@ -69,7 +69,7 @@ while True:
     drawGrid(CELL_SIZE)
 
     if showImage:
-        SCREEN.blit(circle, circleRect.center)
+        SCREEN.blit(cross, crossRect.center)
 
 
 
