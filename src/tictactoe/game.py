@@ -1,32 +1,43 @@
 import pygame, sys
 
+# CONSTANTS -------------------------------------------------------------
+
+# NOTE: Keep HEIGHT and WIDTH as 3 times the CELL_SIZE for optimal display
 WIDTH = 600
 HEIGHT = 600
-FRAMERATE = 60
 CELL_SIZE = 200
+
 CELL_NUMBER = 3
+FRAMERATE = 60
+
 CIRCLE_IMG_PATH = "src/tictactoe/assets/circle.svg.png"
 CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
 
 CIRCLE_TURN = True
 
+# ----------------------------------------------------------------------
+
+# May be used by Game Logic
+
 moves = []
-contains = [[0,0,0],
-            [0,0,0],
-            [0,0,0]]
+contains = [['-','-','-'],
+            ['-','-','-'],
+            ['-','-','-']]
+
+# --------------------------
 
 pygame.init()
 SCREEN = pygame.display.set_mode((CELL_SIZE*CELL_NUMBER, CELL_SIZE*CELL_NUMBER))
 clock = pygame.time.Clock()
 
 # colors
-lineColor = pygame.Color('grey')
-backgroundColor = pygame.Color('black')
+lineColor = pygame.Color('grey12')
+backgroundColor = pygame.Color('oldlace')
 
-# functions
+# Functions ------------------------------------------------------------
 def loadImage(imagePath):
     image = pygame.image.load(imagePath).convert_alpha()
-    image = pygame.transform.scale(image, (200,200))
+    image = pygame.transform.scale(image, (CELL_SIZE,CELL_SIZE))
     imageRect = image.get_rect(center=(CELL_SIZE // 2, CELL_SIZE // 2))
     return image, imageRect
 
@@ -41,13 +52,13 @@ def drawGrid(boxSize):
     # horizontal line
     for y in range(boxSize, HEIGHT, boxSize):
         pygame.draw.line(SCREEN, lineColor, (0,y), (WIDTH,y))
-
+# -----------------------------------------------------------------------
 
 # Image Loading
 circle, circleRect = loadImage(CIRCLE_IMG_PATH)
 cross, crossRect = loadImage(CROSS_IMG_PATH)
 
-# main game loop
+# Main Game Loop --------------------------------------------------------
 while True:
     # event handler
     for event in pygame.event.get():
@@ -63,8 +74,8 @@ while True:
 
                 coord = (row,col)
 
-                if contains[row][col] == 0:
-                    contains[row][col] = 1
+                if contains[row][col] == '-':
+                    contains[row][col] = 'O' if CIRCLE_TURN else 'X'
                     image = circle if CIRCLE_TURN else cross
                     imageRect = image.get_rect(center=(
                         col * CELL_SIZE,
@@ -75,7 +86,7 @@ while True:
                 else:
                     continue
 
-    # draw grid
+    # draw grid background
     drawGrid(CELL_SIZE)
 
     # Draw moves
@@ -86,3 +97,4 @@ while True:
 
     pygame.display.update()
     clock.tick(FRAMERATE)
+# ----------------------------------------------------------------------
