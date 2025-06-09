@@ -5,6 +5,10 @@ HEIGHT = 600
 FRAMERATE = 60
 CELL_SIZE = 200
 CELL_NUMBER = 3
+CIRCLE_IMG_PATH = "src/tictactoe/assets/circle.svg.png"
+CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
+
+CIRCLE_TURN = True #
 
 
 pygame.init()
@@ -16,6 +20,13 @@ lineColor = pygame.Color('grey')
 backgroundColor = pygame.Color('black')
 
 # functions
+def loadImage(imagePath):
+    image = pygame.image.load(imagePath)
+    image = pygame.transform.scale(image, (200,200))
+    imageRect = image.get_rect(center=(CELL_SIZE // 2, CELL_SIZE // 2))
+    return image, imageRect
+
+
 def drawGrid(boxSize):
     SCREEN.fill(backgroundColor)
 
@@ -27,8 +38,12 @@ def drawGrid(boxSize):
     for y in range(boxSize, HEIGHT, boxSize):
         pygame.draw.line(SCREEN, lineColor, (0,y), (WIDTH,y))
 
-def drawClick():
-    pass
+
+# Image Loading
+circle, circleRect = loadImage(CIRCLE_IMG_PATH)
+cross, crossRect = loadImage(CROSS_IMG_PATH)
+
+showImage = False
 
 # main game loop
 while True:
@@ -38,8 +53,25 @@ while True:
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mousePos button 
+                x, y = event.pos
+                # print col and row
+                col = (x // CELL_SIZE)
+                row = (y // CELL_SIZE)
+
+                circleRect.center = (
+                    col * CELL_SIZE,
+                    row * CELL_SIZE)
+
+                showImage = True
+
     # draw grid
-    drawGrid(200)
+    drawGrid(CELL_SIZE)
+
+    if showImage:
+        SCREEN.blit(circle, circleRect.center)
+
+
 
     pygame.display.update()
     clock.tick(FRAMERATE)
