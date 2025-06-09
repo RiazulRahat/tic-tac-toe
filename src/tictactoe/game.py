@@ -63,9 +63,8 @@ while running:
     # event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
+            running = False
+            
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button clicks only 
                 x, y = event.pos
                 # print col and row
