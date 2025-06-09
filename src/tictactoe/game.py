@@ -55,11 +55,13 @@ while True:
             pygame.quit()
             sys.exit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mousePos button 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button clicks only 
                 x, y = event.pos
                 # print col and row
                 col = (x // CELL_SIZE)
                 row = (y // CELL_SIZE)
+
+                coord = (row,col)
 
                 if contains[row][col] == 0:
                     contains[row][col] = 1
@@ -68,7 +70,7 @@ while True:
                         col * CELL_SIZE,
                         row * CELL_SIZE
                         ))
-                    moves.append((image, imageRect))
+                    moves.append((image, imageRect, coord))
                     CIRCLE_TURN = not CIRCLE_TURN
                 else:
                     continue
@@ -76,7 +78,8 @@ while True:
     # draw grid
     drawGrid(CELL_SIZE)
 
-    for image, imageRect in moves:
+    # Draw moves
+    for image, imageRect, _unusedCoord in moves:
         SCREEN.blit(image, imageRect.center)
 
 
