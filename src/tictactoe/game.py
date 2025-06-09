@@ -1,5 +1,5 @@
 import pygame, sys
-from main import GS_tictactoe as ttt
+from ttt_engine import GS_tictactoe as ttt
 
 # CONSTANTS -------------------------------------------------------------
 
@@ -15,6 +15,8 @@ CIRCLE_IMG_PATH = "src/tictactoe/assets/circle.svg.png"
 CROSS_IMG_PATH = "src/tictactoe/assets/cross.svg.png"
 
 CIRCLE_TURN = True
+
+GAME_END_DELAY = 300
 
 # ----------------------------------------------------------------------
 
@@ -55,7 +57,9 @@ circle, circleRect = loadImage(CIRCLE_IMG_PATH)
 cross, crossRect = loadImage(CROSS_IMG_PATH)
 
 # Main Game Loop --------------------------------------------------------
-while True:
+running = True
+while running:
+
     # event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -79,9 +83,6 @@ while True:
                         ))
                     board.moves.append((image, imageRect, coord))
                     CIRCLE_TURN = not CIRCLE_TURN
-                else:
-                    continue
-
     # draw grid background
     drawGrid(CELL_SIZE)
 
@@ -89,8 +90,15 @@ while True:
     for image, imageRect, _unusedCoord in board.moves:
         SCREEN.blit(image, imageRect.center)
 
-
-
     pygame.display.update()
     clock.tick(FRAMERATE)
+
+    if board.is_game_over():
+        pygame.time.delay(GAME_END_DELAY)
+        running = False
+
 # ----------------------------------------------------------------------
+
+# Exit
+pygame.quit()
+sys.exit()
