@@ -1,6 +1,6 @@
 import pygame, sys
 from ttt_engine import GS_tictactoe as ttt
-from utilities import actions
+from utilities import actions, result
 
 # CONSTANTS -------------------------------------------------------------
 
@@ -87,7 +87,7 @@ while running:
                 legalMoves = actions(board)
                 if coord in legalMoves:
                     add_image()
-                    board.make_move(coord)
+                    result(board, coord) # returns (board, next turn)
 
         # remove move by pressing 'b'
         if event.type == pygame.KEYDOWN and event.key == pygame.K_b:

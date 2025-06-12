@@ -60,9 +60,3 @@ class GS_tictactoe:
             return "O wins!"
         else:
             return "Draw!"
-    
-    def make_move(self, move):
-        if self.contains[move[0]][move[1]] == '-':
-            self.contains[move[0]][move[1]] = 'O' if self.max_turn else 'X'
-            self.moves.append(move)
-            self.max_turn = not self.max_turn
