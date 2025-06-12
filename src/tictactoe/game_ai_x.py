@@ -1,6 +1,6 @@
 import pygame, sys
 from ttt_engine import GS_tictactoe as ttt
-from utilities import actions, result, winner, remove_move
+from utilities import actions, result, winner, remove_move, terminal, minimax
 
 # CONSTANTS -------------------------------------------------------------
 CELL_SIZE = 200
@@ -66,6 +66,16 @@ def add_image(row, col, turn):
     imageRect = image.get_rect(center=(col * CELL_SIZE, row * CELL_SIZE))
     image_list.append((image, imageRect))
 
+
+def botMove():
+    if not terminal(board):
+        botMove = minimax(board) 
+        b_row,b_col = botMove 
+        result(board, botMove)
+
+        turn = board.contains[b_row][b_col]
+        add_image(b_row, b_col, turn)
+
 # Main Game Loop --------------------------------------------------------
 running = True
 while running:
@@ -86,10 +96,15 @@ while running:
                     result(board, coord)
                     turn = board.contains[row][col]
                     add_image(row, col, turn)
-
+                
+                    botMove()
+        
         # remove move by pressing 'b'
         if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
             if len(image_list) > 0:
+                # pop twice for bot moves
+                image_list.pop()
+                board = remove_move(board)
                 image_list.pop()
                 board = remove_move(board)
     

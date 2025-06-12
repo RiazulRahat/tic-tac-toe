@@ -45,18 +45,3 @@ class GS_tictactoe:
         '''Check if game is over!'''
         return self._rowCheck() or self._colCheck() or self._diagCheck() or (len(self.moves) == 9)
     
-    def remove_move(self):
-        '''Remove last move'''
-        if len(self.moves) == 0:
-            return None
-        move = self.moves.pop()
-        self.contains[move[0]][move[1]] = '-'
-        self.max_turn = not self.max_turn
-
-    def print_winner(self):
-        if self.winner == 'X':
-            return "X wins!"
-        elif self.winner == 'O':
-            return "O wins!"
-        else:
-            return "Draw!"
