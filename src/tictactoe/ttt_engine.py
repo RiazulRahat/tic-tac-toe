@@ -51,6 +51,7 @@ class GS_tictactoe:
             return None
         move = self.moves.pop()
         self.contains[move[0]][move[1]] = '-'
+        self.max_turn = not self.max_turn
 
     def print_winner(self):
         if self.winner == 'X':
@@ -60,18 +61,8 @@ class GS_tictactoe:
         else:
             return "Draw!"
     
-    def make_nove(self, move):
+    def make_move(self, move):
         if self.contains[move[0]][move[1]] == '-':
             self.contains[move[0]][move[1]] = 'O' if self.max_turn else 'X'
             self.moves.append(move)
             self.max_turn = not self.max_turn
-
-    def legal_moves(self):
-
-        movesList = []
-        for row in range(3):
-            for col in range(3):
-                if self.contains[row][col] == '-':
-                    movesList.append((row,col))
-
-        return movesList

@@ -1,5 +1,6 @@
 import pygame, sys
 from ttt_engine import GS_tictactoe as ttt
+from utilities import actions
 
 # CONSTANTS -------------------------------------------------------------
 
@@ -83,10 +84,10 @@ while running:
                 col = (x // CELL_SIZE)
                 coord = (row,col)
 
-                legal = list(board.legal_moves())
-                if coord in legal:
+                legalMoves = actions(board)
+                if coord in legalMoves:
                     add_image()
-                    board.make_nove((row,col))
+                    board.make_move(coord)
 
         # remove move by pressing 'b'
         if event.type == pygame.KEYDOWN and event.key == pygame.K_b:
